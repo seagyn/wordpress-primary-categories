@@ -1,3 +1,8 @@
 .wpc-primary-selector {
     float: right;
 }
+
+.wpc-error {
+    float: right;
+    color: red;
+}
