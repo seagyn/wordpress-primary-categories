@@ -22,9 +22,4 @@ define( 'WPC_URL', plugin_dir_url( __FILE__ ) );
 require_once WPC_PATH . '/includes/admin.php';
 require_once WPC_PATH . '/includes/helpers.php';
 
-/*
- * TODO: We could add a widget but it would probably be better to create a block. Same could be said for a shortcode.
- * TODO: There might be a use case for someone to alter the category loop query to only show posts with the same primary category but that could lead to a weird user experience.
- */
-
 do_action( 'wpc_loaded' );
