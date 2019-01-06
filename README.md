@@ -7,6 +7,7 @@ This plugin gives you the ability to set a selected category as the primary cate
 * Helper function to get primary category (falls back to first category if none is set) of a post / custom post type.
 * Future: We could add a widget but it would probably be better to create a block. Same could be said for a shortcode.
 * Future: There might be a use case for someone to alter the category loop query to only show posts with the same primary category but that could lead to a weird user experience.
+* Future: Make a REST API endpoint available to get posts by primary category.
 
 ## Usage
 
