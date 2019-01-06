@@ -9,18 +9,18 @@ jQuery( function ( $ ) {
 		$( '#categorychecklist' ).find( 'input:checked' ).each( function ( index, el ) {
 			var category = {
 				'id': $(el).val(),
-				'name': $(el).siblings('label').text()
+				'name': $(el).parent().text()
 			};
 
 			if ( category.id !== wpc_data.primary_category_id ) {
-				$( el ).parents('li').append('<a href="#" class="wpc-primary-selector" title="' + wpc_data.link_title + '" data-category-id="' + category.id + '">' + wpc_data.label + '</a>'); // TODO: Add category name in title.
+				appendPrimarySelectionLink( el, category );
 			}
 		} );
 
 		$( '#categorychecklist' ).find( 'input' ).on( 'change', function( e ) {
 			var category = {
 				'id': $(e.currentTarget).val(),
-				'name': $(e.currentTarget).siblings('label').text()
+				'name': $(e.currentTarget).parent().text()
 			};
 			var isPrimary = false;
 
@@ -61,10 +61,10 @@ jQuery( function ( $ ) {
 					var old_primary_element =  $( '#in-category-' + wpc_data.primary_category_id );
 					var category = {
 						'id': wpc_data.primary_category_id,
-						'name': $(old_primary_element).siblings('label').text()
+						'name': $(old_primary_element).parent().text()
 					};
 
-					$( old_primary_element ).parents('li').append('<a href="#" class="wpc-primary-selector" title="' + wpc_data.link_title + '" data-category-id="' + category.id + '">' + wpc_data.label + '</a>');
+					appendPrimarySelectionLink( old_primary_element, category );
 				}
 				wpc_data.primary_category_id = el.data('category-id');
 				el.remove();
@@ -84,15 +84,27 @@ jQuery( function ( $ ) {
  */
 function togglePrimarySelection ( target, category ) {
 	var checked = $(target).attr('checked');
-	var el = $(target).parents('li');
 
 	/*
 	 * If we are now unchecked, let's remove the link.
 	 * If we are now checked, let's add the link.
 	 */
 	if ( ! checked ) {
-		el.find('.wpc-primary-selector').remove();
+		$(target).parent().find('.wpc-primary-selector').remove();
 	} else {
-		el.append('<a href="#" class="wpc-primary-selector" title="' + wpc_data.link_title + '" data-category-id="' + category.id + '">' + wpc_data.label + '</a>'); // TODO: Add category name in title.
+		appendPrimarySelectionLink( target, category );
 	}
+}
+
+/**
+ * Appending "Make Primary" link to category in post.
+ *
+ * @since      0.1
+ *
+ * @param {HTMLInputElement} el Input element that was checked / unchecked.
+ * @param {object}           category Category that is being selected.
+ * @return void
+ */
+function appendPrimarySelectionLink( el, category ) {
+	$(el).parent().append('<a href="#" class="wpc-primary-selector" title="' + wpc_data.link_title + '" data-category-id="' + category.id + '">' + wpc_data.label + '</a>'); // TODO: Add category name in title. Translated of course.
 }
