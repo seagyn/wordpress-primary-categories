@@ -58,6 +58,7 @@ function admin_enqueue_scripts( $hook ) {
 		$localized_data
 	);
 }
+
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_enqueue_scripts' );
 
 /**
@@ -123,4 +124,23 @@ function set_primary_category() {
 
 	wp_die();
 }
+
 add_action( 'wp_ajax_set_primary_category', __NAMESPACE__ . '\set_primary_category' );
+
+/**
+ * Get posts types which use the built-in categories taxonomy for a certain primary category.
+ *
+ * @param int   $category_id The category ID you are wanting to get posts for.
+ * @param mixed $post_type The post type or types you want to search for. Use an array for multiple post types.
+ *
+ * @return \WP_Query
+ */
+function get_posts_from_primary_category( $category_id, $post_type = 'post' ) {
+	$args = [
+		'post_type'      => $post_type,
+		'meta_key'       => '_primary_category_id',
+		'meta_value_num' => $category_id,
+	];
+
+	return new \WP_Query( $args );
+}
